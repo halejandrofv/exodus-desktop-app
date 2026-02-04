@@ -1,0 +1,42 @@
+{
+  "name": "root",
+  "description": "Desktop app to language tools",
+  "version": "3.1.0",
+  "private": true,
+  "type": "module",
+  "author": {
+    "email": "halejandrofv@gmail.com",
+    "name": "Alejandro Flores",
+    "url": "https://www.google.com"
+  },
+  "main": "packages/entry-point.mjs",
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=23.0.0"
+  },
+  "scripts": {
+    "build": "npm run build -ws --if-present",
+    "compile": "npm run build && electron-builder build --config electron-builder.mjs",
+    "test": "npx playwright test ./tests/e2e.spec.ts",
+    "start": "node packages/dev-mode.js",
+    "typecheck": "npm run typecheck -ws --if-present",
+    "create-renderer": "cd packages && node ./integrate-renderer/create-renderer.js",
+    "integrate-renderer": "npm start --workspace @app/integrate-renderer",
+    "init": "npm run create-renderer && npm run integrate-renderer && npm install"
+  },
+  "devDependencies": {
+    "@npmcli/map-workspaces": "5.0.3",
+    "@playwright/test": "1.58.1",
+    "@types/node": "25.2.0",
+    "create-vite": "8.2.0",
+    "electron": "40.1.0",
+    "electron-builder": "26.7.0",
+    "glob": "13.0.1",
+    "playwright": "^1.58.1"
+  },
+  "dependencies": {
+    "@app/main": "*"
+  }
+}
